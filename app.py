@@ -12,9 +12,6 @@ st.set_page_config(page_title="Image Suggestion App", page_icon="🖼️")
 st.title("🖼️ Image Suggestion App")
 st.caption("Academic Project — Multi-Label Suggestions from Input Images")
 
-# ------------------------------
-# ✅ SAME MODEL CLASS USED DURING TRAINING
-# ------------------------------
 class Phi3Model(nn.Module):
     def __init__(self, num_classes):
         super(Phi3Model, self).__init__()
@@ -26,9 +23,6 @@ class Phi3Model(nn.Module):
     def forward(self, x):
         return self.backbone(x)
 
-# ------------------------------
-# Load model + labels
-# ------------------------------
 @st.cache_resource
 def load_model():
     # Load label index → suggestion text mapping
@@ -51,9 +45,6 @@ transform = transforms.Compose([
     transforms.ToTensor(),
 ])
 
-# ------------------------------
-# Prediction Function
-# ------------------------------
 def predict(image):
     image = transform(image).unsqueeze(0)  # Add batch dimension
     with torch.no_grad():
@@ -65,9 +56,6 @@ def predict(image):
 
     return suggestions or ["No suggestion above confidence threshold"]
 
-# ------------------------------
-# UI — Upload Image
-# ------------------------------
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
